@@ -9,3 +9,4 @@ config
 description
 hooks
 info
+.vscode

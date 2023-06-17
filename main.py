@@ -7,9 +7,8 @@ from questions import QuestionContext, ask_question
 from utility import format_questions
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-print(OPENAI_API_KEY)
 model_name = "gpt-3.5-turbo"
-def GetGitRepo():
+def main():
     repo_url = input("Enter the Github Url of the Repo: ")
     repo_name = repo_url.split("/")[-1]
     print("Cloning the repo.........")
@@ -62,4 +61,3 @@ def GetGitRepo():
                 except Exception as ex:
                     print(f"An error occured: {ex}")
                     break
-GetGitRepo()

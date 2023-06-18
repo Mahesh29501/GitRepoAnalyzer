@@ -6,6 +6,8 @@ from repo_reader import clone_git_repo, load_and_index_files
 from questions import QuestionContext, ask_question
 from utility import format_questions
 import streamlit as st
+from dotenv import load_dotenv
+load_dotenv()
 
 url="url"
 question = "question"

@@ -5,11 +5,16 @@ from langchain.llms import OpenAI
 from repo_reader import clone_git_repo, load_and_index_files
 from questions import QuestionContext, ask_question
 from utility import format_questions
+import streamlit as st
 
+url="url"
+question = "question"
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 model_name = "gpt-3.5-turbo"
 def main():
-    repo_url = input("Enter the Github Url of the Repo: ")
+    st.title("Git repo Analyser")
+    repo_url=st.text_input("Github URL",placeholder="Enter the Github Url of the Repo",key = url)
+    #repo_url = input("Enter the Github Url of the Repo: ")
     repo_name = repo_url.split("/")[-1]
     print("Cloning the repo.........")
     with tempfile.TemporaryDirectory() as local_path:
@@ -49,15 +54,21 @@ def main():
             question_context = QuestionContext(index,document,llm_chain,model_name,repo_name,repo_url,conversation_history,file_type_count,file_names)
             while True:
                 try:
-                    user_question = input("\nAsk a question about the repository (type 'exit() to quit'): ")
+                    user_question = st.text_input("Ask a question about the repository:",key=question)
+                    btn = st.button("Submt")
+                    #user_question = input("\nAsk a question about the repository (type 'exit() to quit'): ")
                     if user_question.lower() == "exit()":
                         break
                     
-                    print("processing....")
-                    user_question = format_questions(user_question)
-                    answer = ask_question(user_question, question_context)
-                    print(f"\nANSWER\n{answer}\n")
-                    conversation_history += f"Question: {user_question}\nAnswer: {answer}\n"
+                    if btn:
+                        print("processing....")
+                        st.text("processing....")
+                        user_question = format_questions(user_question)
+                        answer = ask_question(user_question, question_context)
+                        print(f"\nANSWER\n{answer}\n")
+                        res = st.write(answer)
+                        conversation_history += f"Question: {user_question}\nAnswer: {res}\n"
+
                 except Exception as ex:
                     print(f"An error occured: {ex}")
                     break

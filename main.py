@@ -57,7 +57,7 @@ def main():
             while True:
                 try:
                     user_question = st.text_input("Ask a question about the repository:",key=question)
-                    btn = st.button("Submt")
+                    btn = st.button("Submit")
                     #user_question = input("\nAsk a question about the repository (type 'exit() to quit'): ")
                     if user_question.lower() == "exit()":
                         break
